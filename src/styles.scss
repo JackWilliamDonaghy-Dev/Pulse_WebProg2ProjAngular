@@ -35,3 +35,11 @@ mat-card-content h2 { margin-top: .9rem; }
 .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: .35rem 1rem; }
 .form-grid .full-width { grid-column: 1 / -1; }
 .form-panel > button { margin-top: .5rem; }
+.actions { display: flex; flex-wrap: wrap; gap: .35rem; }
+.danger { color: #902c42 !important; }
+.danger:disabled { color: #68636c !important; }
+.history { margin-top: 2rem; }
+.history-list { list-style: none; padding: 0; display: grid; gap: .85rem; }
+.history-list h3 { margin-top: .85rem; }
+.interaction-notes { white-space: pre-wrap; }
+[role=status]:empty { margin: 0; }

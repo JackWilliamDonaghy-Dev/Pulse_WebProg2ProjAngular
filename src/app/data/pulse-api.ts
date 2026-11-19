@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Person, PersonInput } from './pulse.model';
+import { Interaction, InteractionInput, Person, PersonInput } from './pulse.model';
 
 @Injectable({ providedIn: 'root' })
 export class PulseApi {
@@ -20,6 +20,30 @@ export class PulseApi {
 
   updatePerson(id: string, input: PersonInput) {
     return this.http.put<Person>(`${this.base}/people/${encodeURIComponent(id)}`, input);
+  }
+
+  deletePerson(id: string) {
+    return this.http.delete<{ message: string }>(`${this.base}/people/${encodeURIComponent(id)}`);
+  }
+
+  getInteractions(personId: string) {
+    return this.http.get<Interaction[]>(`${this.base}/interactions`, { params: { personId } });
+  }
+
+  getInteraction(id: string) {
+    return this.http.get<Interaction>(`${this.base}/interactions/${encodeURIComponent(id)}`);
+  }
+
+  createInteraction(input: InteractionInput) {
+    return this.http.post<Interaction>(`${this.base}/interactions`, input);
+  }
+
+  updateInteraction(id: string, input: Omit<InteractionInput, 'personId'>) {
+    return this.http.put<Interaction>(`${this.base}/interactions/${encodeURIComponent(id)}`, input);
+  }
+
+  deleteInteraction(id: string) {
+    return this.http.delete<{ message: string }>(`${this.base}/interactions/${encodeURIComponent(id)}`);
   }
 
 }

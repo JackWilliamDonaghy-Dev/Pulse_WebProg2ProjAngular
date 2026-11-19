@@ -2,8 +2,12 @@
 @if (person(); as person) {
   <header class="page-heading">
     <div><p class="eyebrow">Contact details</p><h1>{{ fullName(person) }}</h1></div>
-    <a matButton="outlined" [routerLink]="['/people', person._id, 'edit']">Edit person</a>
+    <div class="actions"><a matButton="outlined" [routerLink]="['/people', person._id, 'edit']">Edit person</a>
+      <button matButton class="danger" type="button" (click)="removePerson(person)" [disabled]="deleting() || interactionsLoading() || !!interactionsError() || !!interactions().length">Delete person</button></div>
   </header>
+  @if (deleteError()) { <p class="error" role="alert">{{ deleteError() }}</p> }
+  <p role="status">{{ notice() }}</p>
+  @if (interactions().length) { <p class="muted">Delete this contact’s interactions before deleting the contact.</p> }
   <mat-card appearance="outlined">
     <mat-card-content>
       <h2>Check-in plan</h2>
@@ -17,6 +21,37 @@
       }
     </mat-card-content>
   </mat-card>
+  <section class="history" aria-labelledby="history-heading">
+    <div class="page-heading">
+      <h2 id="history-heading" tabindex="-1">Interaction history</h2>
+      <a matButton="filled" [routerLink]="['/people', person._id, 'interactions', 'new']">Log interaction</a>
+    </div>
+    @if (interactionsLoading()) {
+      <p role="status">Loading interactions…</p>
+    } @else if (interactionsError()) {
+      <p role="alert" class="error">{{ interactionsError() }}</p>
+      <button matButton="outlined" type="button" (click)="loadInteractions()">Try again</button>
+    } @else if (!interactions().length) {
+      <p class="empty">No interactions logged yet.</p>
+    } @else {
+      <ul class="history-list">
+        @for (item of interactions(); track item._id) {
+          <li>
+            <mat-card appearance="outlined">
+              <mat-card-content>
+                <h3>{{ interactionLabel(item.type) }} · {{ item.date | date: 'mediumDate' : 'UTC' }}</h3>
+                @if (item.notes) { <p class="interaction-notes">{{ item.notes }}</p> }
+              </mat-card-content>
+              <mat-card-actions class="actions">
+                <a matButton [routerLink]="['/people', person._id, 'interactions', item._id, 'edit']">Edit interaction</a>
+                <button matButton class="danger" type="button" [disabled]="deleting()" (click)="removeInteraction(item)">Delete interaction</button>
+              </mat-card-actions>
+            </mat-card>
+          </li>
+        }
+      </ul>
+    }
+  </section>
 } @else if (error()) {
   <h1>Contact unavailable</h1><p role="alert" class="error">{{ error() }}</p>
 } @else {

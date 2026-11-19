@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Routes, RouterLink } from '@angular/router';
 
+import { InteractionForm } from './interactions/interaction-form';
 import { PeopleList } from './people/people-list';
 import { PersonForm } from './people/person-form';
 import { PersonDetail } from './people/person-detail';
@@ -16,6 +17,8 @@ export const routes: Routes = [
   { path: 'people', component: PeopleList, title: 'People | Pulse' },
   { path: 'people/new', component: PersonForm, title: 'Add person | Pulse' },
   { path: 'people/:id/edit', component: PersonForm, title: 'Edit person | Pulse' },
+  { path: 'people/:id/interactions/new', component: InteractionForm, title: 'Log interaction | Pulse' },
+  { path: 'people/:id/interactions/:interactionId/edit', component: InteractionForm, title: 'Edit interaction | Pulse' },
   { path: 'people/:id', component: PersonDetail, title: 'Contact | Pulse' },
   { path: '**', component: NotFound, title: 'Page not found | Pulse' },
 ];

@@ -1,0 +1,34 @@
+<a matButton [routerLink]="['/people', personId]">← Back to contact</a>
+<header class="page-heading">
+  <div><p class="eyebrow">Interactions</p><h1>{{ interactionId ? 'Edit interaction' : 'Log interaction' }}</h1>
+    @if (personName()) { <p class="muted">For {{ personName() }}</p> }
+  </div>
+</header>
+@if (loadError()) {
+  <p role="alert" class="error">{{ loadError() }}</p>
+} @else if (loading()) {
+  <p role="status">Loading form…</p>
+} @else {
+  <form class="form-panel" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-grid">
+      <mat-form-field appearance="outline">
+        <mat-label>Date</mat-label>
+        <input type="date" matInput formControlName="date" required>
+        <mat-error>Choose a date.</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Type of contact</mat-label>
+        <mat-select formControlName="type" required>
+          @for (type of types; track type.value) { <mat-option [value]="type.value">{{ type.label }}</mat-option> }
+        </mat-select>
+        <mat-error>Choose a type of contact.</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Notes</mat-label>
+        <textarea matInput formControlName="notes" rows="4"></textarea>
+      </mat-form-field>
+    </div>
+    @if (saveError()) { <p role="alert" class="error">{{ saveError() }}</p> }
+    <button matButton="filled" type="submit" [disabled]="saving()">{{ saving() ? 'Saving…' : 'Save interaction' }}</button>
+  </form>
+}
