@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Person } from './pulse.model';
+import { Person, PersonInput } from './pulse.model';
 
 @Injectable({ providedIn: 'root' })
 export class PulseApi {
@@ -14,6 +14,14 @@ export class PulseApi {
   getPerson(id: string) {
     return this.http.get<Person>(`${this.base}/people/${encodeURIComponent(id)}`);
   }
+  createPerson(input: PersonInput) {
+    return this.http.post<Person>(`${this.base}/people`, input);
+  }
+
+  updatePerson(id: string, input: PersonInput) {
+    return this.http.put<Person>(`${this.base}/people/${encodeURIComponent(id)}`, input);
+  }
+
 }
 
 export function requestError(error: unknown, fallback: string): string {

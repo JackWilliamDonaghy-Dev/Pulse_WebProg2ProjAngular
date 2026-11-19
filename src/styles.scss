@@ -31,3 +31,7 @@ mat-card-content { overflow-wrap: anywhere; }
 mat-card-content h2 { margin-top: .9rem; }
 .empty { padding: 1.25rem; border: 1px dashed #aaa2bf; border-radius: 1rem; }
 .error { color: #8a2335; }
+.form-panel { max-width: 46rem; padding: clamp(1rem, 3vw, 1.75rem); background: #fff; border: 1px solid #dad5e8; border-radius: 1.25rem; }
+.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: .35rem 1rem; }
+.form-grid .full-width { grid-column: 1 / -1; }
+.form-panel > button { margin-top: .5rem; }

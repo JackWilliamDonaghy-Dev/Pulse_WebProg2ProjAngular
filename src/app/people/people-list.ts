@@ -1,11 +1,12 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { PulseApi, requestError } from '../data/pulse-api';
 import { Person } from '../data/pulse.model';
 import { PersonCard } from './person-card';
 
 @Component({
-  imports: [MatButtonModule, PersonCard],
+  imports: [RouterLink, MatButtonModule, PersonCard],
   templateUrl: './people-list.html',
 })
 export class PeopleList implements OnInit {

@@ -1,0 +1,41 @@
+<a matButton [routerLink]="id ? ['/people', id] : ['/people']">← Cancel and go back</a>
+<header class="page-heading">
+  <div><p class="eyebrow">People</p><h1>{{ id ? 'Edit person' : 'Add person' }}</h1></div>
+</header>
+@if (loadError()) {
+  <p role="alert" class="error">{{ loadError() }}</p>
+} @else if (loading()) {
+  <p role="status">Loading form…</p>
+} @else {
+  <form class="form-panel" [formGroup]="personForm" (ngSubmit)="onSubmit()">
+    <p class="muted">Name and check-in frequency are required. The other fields are optional.</p>
+    <div class="form-grid">
+      <mat-form-field appearance="outline">
+        <mat-label>First name</mat-label>
+        <input matInput formControlName="firstName" autocomplete="given-name" required>
+        <mat-error>Enter a first name.</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Last name</mat-label>
+        <input matInput formControlName="lastName" autocomplete="family-name" required>
+        <mat-error>Enter a last name.</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Check-in frequency (days)</mat-label>
+        <input matInput type="number" min="1" step="1" formControlName="frequencyDays" required>
+        <mat-error>Enter a whole number of at least 1.</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Last contacted</mat-label>
+        <input matInput type="date" formControlName="lastContacted">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Conversation starters</mat-label>
+        <textarea matInput formControlName="openers" rows="3"></textarea>
+        <mat-hint>One starter per line.</mat-hint>
+      </mat-form-field>
+    </div>
+    @if (saveError()) { <p role="alert" class="error">{{ saveError() }}</p> }
+    <button matButton="filled" type="submit" [disabled]="saving()">{{ saving() ? 'Saving…' : 'Save person' }}</button>
+  </form>
+}

@@ -2,6 +2,7 @@
 @if (person(); as person) {
   <header class="page-heading">
     <div><p class="eyebrow">Contact details</p><h1>{{ fullName(person) }}</h1></div>
+    <a matButton="outlined" [routerLink]="['/people', person._id, 'edit']">Edit person</a>
   </header>
   <mat-card appearance="outlined">
     <mat-card-content>
