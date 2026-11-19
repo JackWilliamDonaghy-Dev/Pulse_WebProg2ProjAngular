@@ -21,3 +21,13 @@ a { color: #514184; }
 :focus-visible { outline: 3px solid #7753ce; outline-offset: 4px; }
 .skip-link { position: absolute; z-index: 2; top: .4rem; left: .4rem; padding: .6rem 1rem; background: #fff; }
 .skip-link:not(:focus) { clip-path: inset(50%); }
+.eyebrow { color: #594681; font-size: .8rem; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .45rem; }
+.muted { color: #5d5970; }
+.page-heading { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: .8rem; margin: 1rem 0 1.25rem; }
+.page-heading p:last-child { margin-bottom: 0; }
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); gap: 1rem; }
+.card-grid mat-card { height: 100%; }
+mat-card-content { overflow-wrap: anywhere; }
+mat-card-content h2 { margin-top: .9rem; }
+.empty { padding: 1.25rem; border: 1px dashed #aaa2bf; border-radius: 1rem; }
+.error { color: #8a2335; }

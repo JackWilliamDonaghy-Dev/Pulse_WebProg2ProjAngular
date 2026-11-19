@@ -1,0 +1,23 @@
+<a matButton routerLink="/people">← All people</a>
+@if (person(); as person) {
+  <header class="page-heading">
+    <div><p class="eyebrow">Contact details</p><h1>{{ fullName(person) }}</h1></div>
+  </header>
+  <mat-card appearance="outlined">
+    <mat-card-content>
+      <h2>Check-in plan</h2>
+      <p>Every {{ person.frequencyDays }} days</p>
+      <p>Last contacted {{ (person.lastContacted | date: 'mediumDate' : 'UTC') ?? 'not recorded' }}</p>
+      <h3>Conversation starters</h3>
+      @if (person.openers.length) {
+        <ul>@for (opener of person.openers; track $index) { <li>{{ opener }}</li> }</ul>
+      } @else {
+        <p class="muted">No starters added yet.</p>
+      }
+    </mat-card-content>
+  </mat-card>
+} @else if (error()) {
+  <h1>Contact unavailable</h1><p role="alert" class="error">{{ error() }}</p>
+} @else {
+  <p role="status">Loading contact…</p>
+}
