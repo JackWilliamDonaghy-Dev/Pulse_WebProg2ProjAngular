@@ -1,0 +1,10 @@
+<a class="skip-link" href="#main-content">Skip to content</a>
+<mat-toolbar class="site-header">
+  <div class="header-inner">
+    <a class="brand" routerLink="/people"><span aria-hidden="true">♥</span> Pulse</a>
+    <nav aria-label="Main navigation">
+      <a routerLink="/people" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" ariaCurrentWhenActive="page">People</a>
+    </nav>
+  </div>
+</mat-toolbar>
+<main id="main-content" tabindex="-1"><router-outlet /></main>
