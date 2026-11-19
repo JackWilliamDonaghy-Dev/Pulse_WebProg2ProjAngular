@@ -1,24 +1,20 @@
 import { Component } from '@angular/core';
 import { Routes, RouterLink } from '@angular/router';
 
-import { InteractionForm } from './interactions/interaction-form';
-import { PeopleList } from './people/people-list';
-import { PersonForm } from './people/person-form';
-import { PersonDetail } from './people/person-detail';
-
 @Component({
   imports: [RouterLink],
   template: '<h1>Page not found</h1><a routerLink="/people">Back to people</a>',
 })
 class NotFound {}
 
+// Match the literal "new" route before treating that path segment as a database ID.
 export const routes: Routes = [
   { path: '', redirectTo: 'people', pathMatch: 'full' },
-  { path: 'people', component: PeopleList, title: 'People | Pulse' },
-  { path: 'people/new', component: PersonForm, title: 'Add person | Pulse' },
-  { path: 'people/:id/edit', component: PersonForm, title: 'Edit person | Pulse' },
-  { path: 'people/:id/interactions/new', component: InteractionForm, title: 'Log interaction | Pulse' },
-  { path: 'people/:id/interactions/:interactionId/edit', component: InteractionForm, title: 'Edit interaction | Pulse' },
-  { path: 'people/:id', component: PersonDetail, title: 'Contact | Pulse' },
+  { path: 'people', loadComponent: () => import('./people/people-list').then((m) => m.PeopleList), title: 'People | Pulse' },
+  { path: 'people/new', loadComponent: () => import('./people/person-form').then((m) => m.PersonForm), title: 'Add person | Pulse' },
+  { path: 'people/:id/edit', loadComponent: () => import('./people/person-form').then((m) => m.PersonForm), title: 'Edit person | Pulse' },
+  { path: 'people/:id/interactions/new', loadComponent: () => import('./interactions/interaction-form').then((m) => m.InteractionForm), title: 'Log interaction | Pulse' },
+  { path: 'people/:id/interactions/:interactionId/edit', loadComponent: () => import('./interactions/interaction-form').then((m) => m.InteractionForm), title: 'Edit interaction | Pulse' },
+  { path: 'people/:id', loadComponent: () => import('./people/person-detail').then((m) => m.PersonDetail), title: 'Contact | Pulse' },
   { path: '**', component: NotFound, title: 'Page not found | Pulse' },
 ];

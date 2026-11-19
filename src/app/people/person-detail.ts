@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, signal, viewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -28,6 +28,7 @@ export class PersonDetail implements OnInit {
   readonly deleteError = signal('');
   readonly deleting = signal(false);
   readonly notice = signal('');
+  private readonly historyHeading = viewChild<ElementRef<HTMLElement>>('historyHeading');
 
   ngOnInit() {
     this.api.getPerson(this.id).subscribe({
@@ -69,6 +70,7 @@ export class PersonDetail implements OnInit {
         next: () => {
           this.interactions.update((rows) => rows.filter((row) => row._id !== item._id));
           this.notice.set('Interaction deleted.');
+          this.historyHeading()?.nativeElement.focus();
           this.deleting.set(false);
         },
         error: (error: unknown) => this.failDelete(error, 'Could not delete this interaction.'),

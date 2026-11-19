@@ -43,3 +43,10 @@ mat-card-content h2 { margin-top: .9rem; }
 .history-list h3 { margin-top: .85rem; }
 .interaction-notes { white-space: pre-wrap; }
 [role=status]:empty { margin: 0; }
+.filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); gap: 0 1rem; max-width: 40rem; }
+.status-chip { display: inline-block; margin: .85rem 0 0; padding: .16rem .65rem; border-radius: 2rem; background: #ece7f8; color: #473769; font-size: .84rem; font-weight: 650; }
+.status-due { background: #fce8ed; color: #83263d; }
+@media (max-width: 36rem) {
+  .page-heading > .actions { margin-top: .35rem; }
+  .header-inner, main { width: calc(100% - 1.5rem); }
+}

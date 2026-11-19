@@ -14,8 +14,28 @@
 } @else if (!people().length) {
   <p class="empty">There are no contacts yet.</p>
 } @else {
+  <div class="filters">
+    <mat-form-field appearance="outline">
+      <mat-label>Search by name</mat-label>
+      <input matInput type="search" #search [value]="query()" (input)="query.set(search.value)">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Check-in status</mat-label>
+      <mat-select [value]="filter()" (selectionChange)="filter.set($event.value)">
+        <mat-option value="all">All contacts</mat-option>
+        <mat-option value="due">Check-in due</mat-option>
+        <mat-option value="upcoming">Up to date</mat-option>
+        <mat-option value="never">No contact date</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <p class="muted" role="status">{{ visiblePeople().length }} of {{ people().length }} contacts shown</p>
+  @if (!visiblePeople().length) {
+    <p class="empty">No contacts match these filters.</p>
+    <button matButton="outlined" type="button" (click)="query.set(''); filter.set('all')">Clear filters</button>
+  }
   <div class="card-grid">
-    @for (person of people(); track person._id) {
+    @for (person of visiblePeople(); track person._id) {
       <app-person-card [person]="person" />
     }
   </div>

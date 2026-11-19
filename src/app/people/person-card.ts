@@ -1,8 +1,9 @@
 import { DatePipe } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { checkInStatus, statusLabels } from '../data/check-in';
 import { fullName, Person } from '../data/pulse.model';
 
 @Component({
@@ -11,6 +12,7 @@ import { fullName, Person } from '../data/pulse.model';
   template: `
     <mat-card appearance="outlined">
       <mat-card-content>
+        <p class="status-chip" [class.status-due]="status() === 'due'">{{ statusLabels[status()] }}</p>
         <h2>{{ fullName(person()) }}</h2>
         <p>Check in every {{ person().frequencyDays }} days</p>
         <p class="muted">Last contacted {{ (person().lastContacted | date: 'mediumDate' : 'UTC') ?? 'not recorded' }}</p>
@@ -23,5 +25,7 @@ import { fullName, Person } from '../data/pulse.model';
 })
 export class PersonCard {
   readonly person = input.required<Person>();
+  protected readonly status = computed(() => checkInStatus(this.person()));
+  protected readonly statusLabels = statusLabels;
   protected readonly fullName = fullName;
 }
